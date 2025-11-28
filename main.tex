@@ -1,0 +1,756 @@
+\documentclass[12pt]{report}
+
+% ----------------- Packages -----------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{newtxtext,newtxmath} % Times New Roman
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{etoolbox}
+\usepackage{ragged2e}
+\usepackage[top=1in, left=1.25in, bottom=1in, right=1in]{geometry}
+\usepackage[colorlinks=true, linkcolor=black, urlcolor=blue, citecolor=blue]{hyperref}
+\usepackage{url}
+\usepackage[numbers,compress]{natbib}
+
+% ----------------- Line & Paragraph Style -----------------
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\raggedbottom
+\sloppy
+
+% ----------------- Page Numbering -----------------
+\pagestyle{plain}
+
+% ----------------- TOC Customization -----------------
+\renewcommand{\contentsname}{Table of Contents}
+\setlength{\cftbeforetoctitleskip}{0.5cm}
+\setlength{\cftaftertoctitleskip}{0.5cm}
+\renewcommand{\cftchapaftersnum}{.}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftbeforechapskip}{1.5pt}
+\setlength{\cftbeforesecskip}{1.5pt}
+
+% ----------------- Chapter/Section Formatting -----------------
+\titleformat{\chapter}[hang]
+  {\bfseries\fontsize{16pt}{18pt}\selectfont}
+  {CHAPTER \thechapter:}{0.5em}{}
+\titlespacing*{\chapter}{0pt}{-10pt}{10pt}
+
+\titleformat{\section}[hang]
+  {\bfseries\fontsize{14pt}{16pt}\selectfont}
+  {\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{12pt}{6pt}
+
+\titleformat{\subsection}[hang]
+  {\bfseries\fontsize{12pt}{14pt}\selectfont}
+  {\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+% Remove automatic chapter page breaks
+\patchcmd{\chapter}{\clearpage}{\relax}{}{}
+\patchcmd{\chapter}{\newpage}{\relax}{}{}
+
+% ----------------- Captions -----------------
+\usepackage[labelfont=bf,font=bf]{caption}
+\captionsetup{justification=centering, labelsep=period}
+
+% ----------------- Document Starts -----------------
+\begin{document}
+
+% ================= TITLE PAGE (Modified to match image layout) =================
+\begin{titlepage}
+\thispagestyle{empty} % Ensure no page numbers appear here
+\begin{center}
+    % --- Logo at top ---
+    \includegraphics[width=3cm]{logo.png} \\[0.5cm] % replace logo.png with your file name
+
+
+% University Info
+{\large Tribhuvan University} \\
+\vspace*{0.2cm}
+{\large Faculty of Humanities and Social Sciences} % Note: Changed 'Science' to 'Sciences' as per the image
+\vspace*{1.8cm}
+
+% --- 2. Project Title ---
+{\large \textbf{"AUTO FORM FILL-UP APPLICATION"}} \\ % Use huge for main title, add quotes as per the first image
+\vspace*{0.4cm}
+{\large \textbf{A PROJECT REPORT}} \\
+\vspace*{1cm}
+% Use \vfill to push the next block further down the page, 
+% like the large gap visible in the images.
+
+
+% --- 3. Submission Details (Middle Block) ---
+{\large Submitted to} \\
+\vspace*{0.2cm}
+{\large \textbf{Department of Computer Application}} \\
+{\large \textbf{Butwal Kalika Campus}} \\
+\vspace*{1.5cm}
+
+%% --- 4. Fulfillment Statement ---
+\centering % Already set by the titlepage environment, but safe to reconfirm
+\emph{In partial fulfillment of the requirements for the Bachelors in Computer Application}
+
+% Use \vfill to create a large gap between the fulfillment and the author block
+\vfill
+% Use \vfill to create a large gap between the fulfillment and the author block
+\vfill
+
+% --- 5. Author and Supervisor Details (Lower Middle Block) ---
+{\large Submitted by} \\
+\vspace*{0.2cm}
+\textbf{Hasan Gaha} [Your Roll Number] \\
+
+\vspace*{1.5cm}
+
+{\large Under the Supervision of} \\
+\vspace*{0.5cm}
+{\large \textbf{Mr. Roshan Khanal}} \\
+
+% Use \vfill to push the date to the very bottom
+\vfill
+\vspace*{0.5cm} % Add a little space above the date
+
+% --- 6. Date (Bottom Block) ---
+ \large  {\today}
+ \vspace*{0.9cm} % Space from the bottom edge
+
+\end{titlepage}
+\end{center}
+
+% ================= SUPERVISOR'S RECOMMENDATION =================
+\newpage
+\pagenumbering{roman}
+\setcounter{page}{2}
+
+\chapter*{SUPERVISOR'S RECOMMENDATION}
+\addcontentsline{toc}{chapter}{SUPERVISOR'S RECOMMENDATION}
+
+% ================= LETTER OF APPROVAL =================
+\newpage
+\begin{center} % <--- Use the center environment
+    \chapter*{LETTER OF APPROVAL}
+\end{center} % <--- End the center environment
+\addcontentsline{toc}{chapter}{LETTER OF APPROVAL}
+
+% Add the content of the letter below the centered heading
+% ...
+% ...
+% ================= STUDENT'S DECLARATION =================
+\newpage
+\chapter*{STUDENT'S DECLARATION}
+\addcontentsline{toc}{chapter}{STUDENT'S DECLARATION}
+
+% ================= SUPERVISOR LOG SHEET =================
+\newpage
+\chapter*{SUPERVISOR LOG SHEET}
+\addcontentsline{toc}{chapter}{SUPERVISOR LOG SHEET}
+
+% ================= ABSTRACT =================
+\newpage
+\chapter*{ABSTRACT}
+\addcontentsline{toc}{chapter}{ABSTRACT}
+
+Government offices in Nepal face significant challenges due to manual form-filling processes that are time-consuming, error-prone, and inefficient. This project presents the development of an Auto Form Fill-Up Application designed to automate the extraction and filling of government forms, specifically the Land and Property Tax Form (Sampati Kar) and Business Tax Registration Form. 
+
+The system utilizes Google Gemini Vision API for intelligent document understanding and Tesseract OCR as a fallback mechanism, enabling robust data extraction from citizenship certificates and business documents. Implemented using Python 3.11 with Streamlit for the user interface, the application features template-based form mapping, data validation, user profile management, and PDF generation with proper Devanagari font rendering.
+
+Testing with real government documents demonstrated 85-90\% extraction accuracy with Gemini AI and 70-75\% with OCR fallback. The system reduces form processing time from 15-30 minutes to 3-5 minutes per citizen, representing a 70-80\% efficiency improvement. The application successfully demonstrates the feasibility of modernizing government services through practical technology implementation while requiring minimal infrastructure and technical expertise.
+
+% ================= ACKNOWLEDGEMENT =================
+\newpage
+\chapter*{ACKNOWLEDGEMENT}
+\addcontentsline{toc}{chapter}{ACKNOWLEDGEMENT}
+
+I would like to express my sincere gratitude to all those who supported and guided me throughout this project. First and foremost, I am deeply grateful to my project supervisor, \textbf{Mr. Roshan Khanal}, for his invaluable guidance, continuous encouragement, and expert advice throughout the development of this project.
+
+I extend my heartfelt thanks to the \textbf{Department of Computer Application, Butwal Kalika Campus}, for providing the necessary resources and academic environment that made this work possible. I am also grateful to all the faculty members who have contributed to my learning and development throughout my academic journey.
+
+Special thanks to the staff at the municipal office where I completed my internship. Their insights into the manual form-filling process and the challenges faced in daily operations were instrumental in shaping the requirements and design of this application.
+
+I would also like to acknowledge my family and friends for their unwavering support, patience, and encouragement during the challenging phases of this project.
+
+Finally, I am thankful to all the researchers and developers whose work in optical character recognition, document processing, and artificial intelligence formed the foundation upon which this project was built.
+
+
+% ================= TABLE OF CONTENTS =================
+\newpage
+\addcontentsline{toc}{chapter}{Table of Contents}
+\tableofcontents
+
+% ================= LIST OF FIGURES =================
+\newpage
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+
+% ================= LIST OF TABLES =================
+\newpage
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+
+% ================= LIST OF ABBREVIATIONS =================
+\newpage
+\chapter*{LIST OF ABBREVIATIONS}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+
+\begin{tabbing}
+\hspace{3cm} \= \kill
+\textbf{AI} \> Artificial Intelligence \\
+\textbf{API} \> Application Programming Interface \\
+\textbf{CRUD} \> Create, Read, Update, Delete \\
+\textbf{DFD} \> Data Flow Diagram \\
+\textbf{ER} \> Entity-Relationship \\
+\textbf{JSON} \> JavaScript Object Notation \\
+\textbf{OCR} \> Optical Character Recognition \\
+\textbf{ORM} \> Object-Relational Mapping \\
+\textbf{PDF} \> Portable Document Format \\
+\textbf{SQL} \> Structured Query Language \\
+\textbf{UI} \> User Interface \\
+\textbf{URL} \> Uniform Resource Locator \\
+\end{tabbing}
+
+% ================= MAIN CHAPTERS START =================
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% ================= CHAPTER 1 =================
+\chapter{INTRODUCTION}
+
+\section{Introduction}
+In Nepal, official systematic procedures truly test our patience, 
+particularly when it comes to paperwork. Every sector government 
+offices, banks, administrative bodies, and educational institutions
+requires extensive application procedures and form filling as part 
+of their workflow. Even in this modern technological era, we continue 
+to rely on manual form-filling processes. These forms are essential 
+for citizen services, legal documentation, and public record maintenance.
+Manual form filling is time-consuming, labor-intensive, and highly 
+prone to errors such as mistyping and data omission. During my 
+observations at municipal offices, I noticed a critical insight: 
+the information required to fill most government forms is already 
+available in citizens' official documents—national identity cards, 
+citizenship certificates, and business registration papers. The same 
+personal details are entered repeatedly across different forms, 
+creating unnecessary redundancy and frustration.
+
+This observation led to the development of the Auto Form Fill-Up 
+Application. The system addresses this inefficiency by automatically 
+extracting data from legal documents and certificates, then intelligently 
+mapping this information to the appropriate fields in government forms. 
+By harnessing technologies such as Optical Character Recognition (OCR), 
+Google Gemini AI for semantic understanding, PDF generation tools, and 
+database management systems, the application modernizes form handling 
+for Nepal's public sector.
+
+The Auto Form Fill-Up App is designed to support mass processing of 
+forms, generate accurately filled documents in PDF format, and provide 
+a user-friendly interface suitable for government office staff with 
+minimal technical expertise. The application serves as a viable prototype 
+demonstrating how Nepal's bureaucratic processes can be made more 
+efficient, secure, and transparent through technology. By automating 
+repetitive data entry tasks, the system enhances workflow efficiency, 
+improves public service experience, and paves a new path toward 
+digitalization of government operations.
+
+
+\section{Problem Statement}
+Government offices in Nepal, particularly sub-metropolitan municipalities, face 
+numerous challenges due to their continued reliance on manual form-filling 
+processes. This project focuses on two critical forms commonly processed at 
+sub-metropolitan offices: the Land and Property Tax Form (Sampati Kar) and the Business Tax Registration Form. These forms represent high-volume, repetitive tasks that exemplify the broader challenges of manual bureaucratic processes.
+
+During an internship at a municipal office, several critical inefficiencies were identified in the current manual system. Citizens arriving with their citizenship certificates, business registration documents, naksha pass certificates, and other official papers must wait in long queues while office staff manually transcribe information into multiple forms. Due to limited staffing, sub-metropolitan offices often hire students from different campuses for internships to manage the workload. The same personal details name, father's name, address, citizenship number—are copied repeatedly across different documents, consuming significant time and resources. This repetitive manual process creates multiple points of failure and frustration for both citizens and government employees.
+
+The following key problems were observed in the manual form-filling system:
+\begin{enumerate}[label=\textbullet, topsep=2pt, partopsep=0pt, itemsep=2pt, parsep=0pt]
+ \item\textbf{High Error Rate:} Human data entry is inherently susceptible to spelling mistakes, numerical transposition errors, field omissions, and inconsistencies between documents. Even minor errors in critical fields such as citizenship numbers or property identification can lead to legal complications and require time-consuming corrections.
+
+\item\textbf{Slow Processing Time:} During peak periods such as tax filing deadlines, bulk form submissions create extensive queues. Office staff must manually extract data from source documents, transcribe information into multiple forms, cross-check entries for accuracy, and file physical copies a process that can take 15-30 minutes per citizen.
+
+\item\textbf{Lack of Centralized Data Management:} Paper-based forms and isolated digital records scattered across different registers make data storage, retrieval, and updates extremely difficult. Searching for historical records or generating reports requires manual examination of physical archives, which is both time-consuming and unreliable.
+
+\item\textbf{Limited Scalability:} The manual system cannot efficiently handle volume fluctuations. During peak periods such as fiscal year-end, offices become overwhelmed, leading to extended wait times, rushed processing, and increased error rates.
+
+\item\textbf{Inefficient Record Keeping:} Updating existing records or correcting errors requires locating physical documents, making manual corrections, and updating multiple registers. This cumbersome process limits the government's ability to maintain accurate, up-to-date citizen records and respond quickly to inquiries.
+\end{enumerate}
+These interconnected issues create significant bottlenecks that negatively impact 
+both government operational efficiency and citizen satisfaction. Manual processes 
+consume valuable staff time that could be better spent on service delivery and 
+decision-making. Citizens experience frustration due to long wait times, repeated 
+data entry requirements, and processing delays. From a broader perspective, these 
+inefficiencies undermine public trust in government services and hinder Nepal's 
+progress toward digital governance. To address these challenges, there is a critical 
+need for a comprehensive digital solution that automates form filling through 
+intelligent data extraction, maintains a centralized database for efficient record 
+management, validates data to ensure accuracy, and improves processing turnaround 
+time all while minimizing disruption to current workflows and requiring minimal 
+technical expertise from office staff.
+
+
+\section{Objectives}
+The primary objective of this project is to develop an automated system 
+that modernizes government form processing in Nepal through intelligent 
+data extraction and digital workflow management.
+
+The specific objectives are:
+\begin{enumerate}[label=\textbullet, topsep=2pt, partopsep=0pt, itemsep=2pt, parsep=0pt]
+ \item To develop a robust Python-based application that automates the extraction of information from government-issued documents.
+
+\item To implement intelligent data extraction using Google Gemini Vision API as primary extraction engine with tesseract OCR as fallback.
+
+\item To design and implement JSON-based template configurations for Nepali 
+   government forms.
+
+\item To integrate a relational database management system (MySQL/SQLite) for 
+   persistent storage of extracted data and record keeping.
+
+\item To generate print-ready PDF documents using ReportLab library with proper Devanagari (Nepali Unicode) font rendering, ensuring filled forms match official government templates precisely.
+
+\item  To implement a user profile management system that enables data reusability across multiple form submissions, reducing redundant data entry for repeat users.
+
+\item To demonstrate the system's effectiveness through a working prototype capable of processing real government documents.
+\end{enumerate}
+\newpage
+
+\section{Scope and Limitations}
+This Auto Form Fill-Up Application is designed specifically for automating two commonly used government forms at sub-metropolitan offices in Nepal: the Land and Property Tax Form (Sampati Kar) and the Business Tax Registration Form. The system extracts personal and business information from citizenship certificates, business registration documents, and naksha pass certificates using Google Gemini Vision API and Tesseract OCR, then automatically fills the extracted data into the appropriate form fields and generates print-ready PDF documents. Users can create profiles to save their information for future form submissions, and an admin panel allows office staff to manage user records. 
+
+However, the system has certain limitations: it requires 
+a JSON template configuration file for each new form type, which means adding support for additional government forms requires manual template creation with field coordinate measurements. The accuracy of data extraction depends on the quality and clarity of uploaded document images blurred, damaged, or poorly scanned documents may result in extraction errors that require manual correction. The system also requires an active internet connection to use the Gemini AI service, though it automatically falls back to offline OCR when the internet is unavailable. Currently, the system is optimized for Nepali government forms with Devanagari script and may not perform well with forms in other languages or significantly different layouts. Additionally, while the system validates common data formats like phone numbers and email addresses, it cannot verify the authenticity of documents or detect fraudulent information it assumes all uploaded documents are genuine and issued by authorized government bodies.
+\newpage
+
+\section{Report Organization}
+\begin{enumerate}[label=\textbullet, topsep=2pt, partopsep=0pt, itemsep=2pt, parsep=0pt]
+\item Chapter 1 \textbf{Introduction} provides introduction to the project, including the problem statement, objectives, and scope.
+ \item Chapter 2 \textbf{Background Study And Literature Review} presents the background study and literature review, covering fundamental concepts of OCR, AI-based document processing, and similar existing systems. 
+\item Chapter 3 \textbf{System Analysis And Design} provides details the system analysis and design, including requirement analysis, feasibility study, data modeling with ER diagrams, and system architecture. 
+\item Chapter 4 \textbf{Implementation And Testing} describes the implementation process, tools and technologies used, module descriptions, and testing procedures with test cases. 
+\item Chapter 5 \textbf{Conclusion And Future Recommendation} concludes the report with lessons learned, conclusions, and recommendations for future enhancements.
+\end{enumerate}
+
+% ================= CHAPTER 2 =================
+\chapter{BACKGROUND STUDY AND LITERATURE REVIEW}
+\section{Background Study}
+The Auto Form Fill-Up Application relies on several core technologies working 
+together. Optical Character Recognition (OCR) is a technology that converts text from images into machine-readable format Tesseract OCR serves as the fallback extraction mechanism in this system when internet connectivity is unavailable. Artificial Intelligence for document understanding goes beyond simple text recognition by semantically interpreting document content Google Gemini Vision API analyzes uploaded citizenship certificates and business documents, understanding context and field relationships rather than just extracting raw text. PDF generation involves programmatically creating documents with precise text placement and formatting ReportLab library handles this by rendering extracted data onto government form templates with accurate Devanagari font support. Database Management Systems provide structured storage and retrieval of information SQLAlchemy ORM manages user profiles and form submission records in either SQLite or MySQL databases. Form automation refers to the process of automatically populating form fields with extracted data this project uses JSON-based templates that map source document fields to target form coordinates. Finally, Devanagari Script Processing ensures proper handling of Nepali Unicode characters throughout the system, from extraction through PDF generation, using NotoSans Devanagari fonts for accurate rendering of official government forms. 
+
+\section{Literature Review}
+Several researchers have explored automated document processing and form filling systems. Smith presented Tesseract OCR engine architecture, demonstrating its effectiveness in recognizing text across multiple languages including Devanagari script, though accuracy depends significantly on image quality and pre-processing techniques. Antonacopoulos and colleagues developed methodologies for evaluating document layout analysis systems, emphasizing the importance of understanding form structure before data extraction this research informed the template-based approach 
+used in this project.
+
+Denk and Reisswig introduced BERTgrid for contextualized document representation, showing that AI models can understand relationships between fields rather than treating documents as isolated text fragments. This concept directly influenced the decision to use Gemini Vision API for semantic field mapping. Dhakal's work on one-shot template matching for automatic document data capture demonstrated that predefined templates significantly improve extraction accuracy compared to fully dynamic approaches this validation supported the JSON template methodology implemented in this system.
+
+In the context of Nepal, Bhattarai and Adhikari analyzed e-governance initiatives, identifying manual form processing as a major bottleneck in government service delivery. Their research highlighted the need for practical automation solutions that require minimal infrastructure and technical expertise, which guided the design decisions for making this application accessible to sub-metropolitan office staff with limited technical backgrounds.
+\newpage
+% ================= CHAPTER 3 =================
+\chapter{SYSTEM ANALYSIS AND DESIGN}
+\section{System Analysis}
+The system analysis phase focuses on understanding the requirements, feasibility, and structure of the Auto Form Fill-Up Application. This analysis examines the functionality needed to automate government form processing, the technical and operational constraints, and the data flow throughout the system. The application is designed as a desktop-based solution using Streamlit for the user interface, Python for backend processing, and SQLAlchemy for database management. The system supports document upload, AI-powered data extraction, manual data review and editing, and PDF generation with proper Devanagari rendering for Nepali government forms.
+
+\subsection{Requirement Analysis}
+\subsubsection{Functional Requirements}
+The functional requirements define the core features and capabilities that the Auto Form Fill-Up Application must provide to users. These requirements were identified through observation during internship at municipal offices and analysis of the manual form-filling workflow currently in use.
+\begin{enumerate}[label=\textbullet, topsep=2pt, partopsep=0pt, itemsep=2pt, parsep=0pt]
+\item\textbf{User Registration and Authentication:} The system allows users to create accounts   using their email address and password. Password authentication ensures that user data remains private and accessible only to the account owner. The system stores hashed passwords for security.
+
+\item\textbf{Document Upload:} Users can upload multiple document images simultaneously, including citizenship certificates, business registration papers, and naksha pass documents. Supported formats include JPEG, PNG, and TIFF files.
+
+\item\textbf{Intelligent Data Extraction:} The system extracts text and field data from uploaded documents using Google Gemini Vision API as the primary extraction engine. When internet connectivity is unavailable or API limits are reached, the system automatically falls back to Tesseract OCR for local text extraction.
+
+\item\textbf{Template-Based Form Mapping:} The application uses JSON configuration files that define field locations, types, and validation rules for each government form type. Currently supports Land and Property Tax Form (Sampati Kar) and Business Tax Registration Form.
+
+\item\textbf{Data Review and Editing:} After extraction, users can review all extracted fields, view confidence scores indicating extraction accuracy, and manually edit any incorrect or missing information before generating the final PDF.
+
+\item\textbf{Data Validation:} The system validates critical fields including Nepali phone numbers (must be 10 digits starting with 9, second digit 7 or 8), email addresses (must contain @ and domain), and required field completeness.
+
+\item\textbf{User Profile Management:} Users can save their personal information to their profile, enabling automatic form filling for future submissions without re-entering the same data repeatedly.
+
+\item\textbf{PDF Generation:} The system generates print-ready PDF documents with extracted data accurately positioned in the correct fields, using NotoSans Devanagari font for proper Nepali Unicode rendering.
+\end{enumerate}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{usecase.png}
+\caption{Use Case Diagram}
+\label{fig:usecase}
+\end{figure}
+
+\subsubsection{Non-Functional Requirements}
+It specify the quality attributes and performance 
+characteristics that the system must maintain:
+\begin{enumerate}[label=\textbullet, topsep=2pt, partopsep=0pt, itemsep=2pt, parsep=0pt]
+\item\textbf{Performance:} The system should complete data extraction within 15-30 seconds for standard-quality citizenship certificate images using Gemini API. OCR fallback processing should complete within 5-10 seconds per image. 
+\item\textbf{Accuracy:} Gemini-based extraction should achieve minimum 85 percent accuracy for clear, high-quality document images. OCR fallback should achieve minimum 70 percent accuracy. The system must clearly indicate confidence levels for each extracted field to help users identify fields requiring manual review.
+
+ \item\textbf{Usability:} The interface must be intuitive enough for government office staff with minimal computer literacy to operate effectively. All primary functions (upload, extract, review, generate) should be accessible within 2-3 clicks. Error messages must be clear and actionable in both English and Nepali context.
+
+\item\textbf{Reliability:} The system should maintain 95 percent uptime during office hours. The automatic fallback from Gemini to OCR must activate seamlessly without user intervention when API failures occur.
+
+\item\textbf{Security:} User passwords must be hashed using bcrypt with proper salting. The system must prevent SQL injection through parameterized queries. User data must remain isolated - users can only access their own profiles and submissions.
+
+\item\textbf{Maintainability:} The codebase follows modular architecture with clear separation between extraction, validation, PDF generation, and database operations. Each module should be independently testable and updatable.
+
+\item\textbf{Scalability:} The system should support adding new form templates by simply creating new JSON configuration files without modifying application code.
+
+\item\textbf{Compatibility:} The application must run on standard office computers running Windows 10 or later with minimum 4GB RAM and Python 3.11+. Database should support both MySQL for networked deployments and SQLite for standalone operation.
+\end{enumerate}
+\subsection{Feasibility Analysis}
+\subsubsection{Technical Feasibility}
+The Auto Form Fill-Up Application is technically feasible based on the availability of mature, well-documented technologies. Python 3.11 provides a robust foundation with extensive library support for image processing, database operations, and PDF generation. Google Gemini Vision API offers commercial-grade document understanding capabilities with RESTful API access, while Tesseract OCR provides reliable offline text extraction with Nepali language support. Streamlit framework enables rapid development of interactive web interfaces without requiring extensive frontend development expertise. SQLAlchemy ORM abstracts database operations, allowing the system to work with both MySQL and SQLite without code changes. ReportLab library successfully handles PDF generation with Unicode font embedding for Devanagari script. All required technologies are open-source or offer free tiers suitable for government office deployment, and comprehensive documentation exists for each component. The development team has access to necessary development tools including Python IDEs, version control, and testing frameworks.
+
+
+\subsubsection{Operational Feasibility}
+The system demonstrates strong operational feasibility as it directly addresses real pain points observed during internship at municipal offices. Current manual processes require 15-30 minutes per citizen for form filling, data transcription, and verification. The automated system reduces this to 3-5 minutes including document upload, extraction, review, and PDF generation - a 70-80 percent time reduction. Office staff require minimal training as the Streamlit interface follows familiar web application patterns with clear visual feedback at each step. The system maintains human oversight by requiring users to review and confirm extracted data before PDF generation, addressing staff concerns about automation accuracy and accountability. The dual extraction approach (Gemini with OCR fallback) ensures operation continues even during internet outages, maintaining workflow continuity. User profile functionality directly addresses the common scenario where the same citizens return for different services, eliminating redundant data entry. The system integrates into existing workflows without requiring changes to official form templates or government procedures - it simply automates the filling process while maintaining the same official PDF outputs that government offices currently use.
+
+\subsubsection{Economic Feasibility}
+Economic feasibility is favorable due to minimal infrastructure and licensing costs. Development relies entirely on open-source technologies: Python, Streamlit, Tesseract OCR, ReportLab, and SQLAlchemy require no licensing fees. Google Gemini API offers a free tier with 60 requests per minute, sufficient for typical municipal office volumes of 20-50 forms daily. If usage exceeds free tier limits, paid API access costs approximately Rs10-20 per image, resulting in monthly costs under RS600-RS700 for an office processing 100 forms daily. The system runs on existing office computers without requiring specialized hardware - minimum requirements of 
+4GB RAM and dual-core processor are met by standard government office equipment purchased in the last 5 years. SQLite database option eliminates server costs for small offices, while MySQL deployment for larger offices uses free open-source database software. Staff time savings provide immediate return on investment: reducing processing time from 30 minutes to 5 minutes per form saves 25 minutes of staff time, valued at approximately NPR 50-100 per form based on average clerical wages. An office processing 50 forms daily saves 20+ staff hours per week, equivalent to half a full-time position. Initial development and deployment costs are minimal, primarily consisting of developer time for customization and staff training. The system pays for itself within the first month of operation through labor cost savings alone.
+
+
+\subsubsection{Schedule Feasibility}
+The project timeline was realistic and achievable within the academic semester constraints. Development occurred over 12 weeks following standard software development lifecycle phases. Week 1-2 focused on requirement gathering through internship observation and stakeholder interviews at municipal offices. Week 3-4 covered system design including database schema, module architecture, and template structure definition. Week 5-8 comprised core implementation: Gemini integration, OCR fallback, PDF generation, and database operations. Week 9-10 involved user interface development with Streamlit and integration of all components. Week 11 conducted testing including extraction accuracy evaluation, validation logic verification, and PDF output quality assessment. Week 12 handled documentation, deployment preparation, and demo system setup. The modular architecture allowed parallel development of independent components, accelerating the overall timeline. Leveraging existing libraries (Streamlit, SQLAlchemy, ReportLab) rather than building from scratch significantly reduced development time. The decision to focus on two specific form types (land tax and business tax) rather than attempting generic form support kept scope manageable within the semester timeframe. Use of Python's rapid prototyping capabilities enabled quick iteration based on testing feedback. The project successfully met all milestone deadlines including proposal defense, mid-term progress review, and final submission.
+
+
+\subsection{Data Modeling (ER Diagram)}
+\subsubsection{For Users:}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{er_diagram.png}
+\caption{Entity-Relationship Diagram}
+\label{fig:er}
+\end{figure}
+
+\subsection{Process Modeling (DFD)}
+
+\subsubsection{Level-0 DFD}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{dfd_level0.png}
+\caption{Level-0 DFD (Context Diagram)}
+\label{fig:dfd0}
+\end{figure}
+
+\subsubsection{Level-1 DFD}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{dfd_level1.png}
+\caption{Level-1 DFD}
+\label{fig:dfd1}
+\end{figure}
+
+\subsubsection{Level-2 DFD}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{dfd_level2.png}
+\caption{Level-2 DFD}
+\label{fig:dfd2}
+\end{figure}
+
+\section{System Design}
+The Auto Form Fill-Up Application follows a three-tier architecture with clear separation between presentation, application, and data layers. This modular design ensures maintainability and scalability.
+
+\subsection{Architectural Design}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{architecture.png}
+\caption{System Architecture Diagram}
+\label{fig:arch}
+\end{figure}
+
+\subsection{Database Schema Design}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{db_schema.png}
+\caption{Database Schema}
+\label{fig:dbschema}
+\end{figure}
+
+\subsection{Interface Design}
+The user interface design prioritizes simplicity and clarity, following a 
+step-by-step workflow that guides users through the form-filling process. The 
+Streamlit framework provides the foundation with its clean, responsive layout and automatic state management.
+
+The main interface consists of five sequential sections presented as numbered cards:
+
+Step 1 - Template Selection: A dropdown menu displays available form types with Nepali names (सम्पत्ति कर फारम, व्यवसाय कर फारम). The selection determines which 
+JSON template will be used for field mapping.
+
+Step 2 - Document Upload: A drag-and-drop file uploader accepts multiple images simultaneously. Uploaded images display as thumbnails in a responsive grid layout, providing immediate visual confirmation of successful upload.
+
+Step 3 - Data Extraction: A prominent "Extract with Gemini" button initiates 
+processing. A progress bar with status text provides real-time feedback ("Analyzing documents...", "Extraction completed"). If Gemini fails, an automatic OCR fallback activates with appropriate messaging to the user.
+
+Step 4 - Review and Edit: Extracted data displays in a two-column form layout with field labels in both Nepali and English. Each field shows a confidence indicator (green circle for high confidence, yellow for medium, red for low) helping users identify fields needing careful review. Text input boxes allow inline editing of any field. A "Load My Saved Data" button enables one-click autofill from user profile. Input validation provides immediate feedback for phone numbers and emails.
+
+Step 5 - PDF Generation: A "Generate PDF" button creates the filled form. A 
+checkbox option "Save data to my profile" lets users update their stored information. Upon successful generation, a download button appears with the PDF file name.
+
+The sidebar provides persistent access to user profile management and admin panel (for authorized users). Profile features include account creation, login, and logout with clear visual indication of login status. The admin panel displays user statistics and management functions in collapsible sections.
+
+Color scheme follows standard web conventions: blue for primary actions, green for success states, yellow for warnings, and red for errors. The interface maintains sufficient contrast for readability and uses 12pt font size for body text with larger headings for section titles.
+
+Error messages appear inline near the relevant field or action button, using clear language explaining what went wrong and how to fix it ("Phone must be 10 digits starting with 9").
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{ui_screenshot.png}
+\caption{User Interface Screenshot}
+\label{fig:ui}
+\end{figure}
+
+\subsection{Physical DFD}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{physical_dfd.png}
+\caption{Physical DFD}
+\label{fig:physical_dfd}
+\end{figure}
+\newpage
+% ================= CHAPTER 4 =================
+\chapter{IMPLEMENTATION AND TESTING}
+
+\section{Implementation}
+The Auto Form Fill-Up Application was implemented using Python 3.11 as the primary programming language with a modular architecture separating concerns across different components. The development followed an iterative approach, beginning with core extraction functionality, then adding validation and PDF generation, and finally implementing the user interface and database integration. The entire codebase is organized into distinct modules handling extraction, form filling, PDF generation, database operations, and user interface presentation.
+
+
+\subsection{Tools Used}
+The implementation utilized Streamlit for building the interactive web interface, Google Gemini Vision API and Tesseract OCR for document text extraction, ReportLab for PDF generation with Devanagari font support, SQLAlchemy ORM for database abstraction supporting both MySQL and SQLite, OpenCV and Pillow for image processing, and Python-dotenv for environment configuration management. Version control was maintained using Git, and the development environment included VS Code as the primary 
+code editor with Python virtual environment for dependency isolation.
+
+\subsection{Implementation Details of Modules}
+The system is organized into the following functional modules:
+\begin{enumerate}[label=\textbullet, topsep=2pt, partopsep=0pt, itemsep=2pt, parsep=0pt]
+
+\item \textbf{Gemini Extractor Module (app/gemini/extractor.py):}
+Interfaces with Google Gemini Vision API to perform semantic extraction of text and field data from uploaded document images using AI-powered document understanding.
+
+\item \textbf{OCR Fallback Module (app/ocr/extractor.py):}
+Implements Tesseract-based optical character recognition as a backup extraction mechanism when internet connectivity is unavailable or API limits are exceeded.
+
+\item \textbf{Form Filler Module (app/filler/form-filler.py):}
+Normalizes extracted data by validating formats, converting Nepali numerals to Arabic digits, and mapping source fields to target form fields according to template specifications.
+
+\item \textbf{PDF Generator Module (app/printer/pdf-generator.py):}
+Creates filled PDF documents by overlaying extracted text onto government form templates with precise coordinate positioning and proper Devanagari Unicode rendering.
+
+\item \textbf{Database Module (app/db/):}
+Manages data persistence using SQLAlchemy ORM, including models for user profiles and form submissions, connection handling with MySQL/SQLite, and session management for database transactions.
+
+\item \textbf{Template Utilities Module (app/utils/templates.py):}
+Loads and parses JSON template configuration files that define form field locations, types, validation rules, and metadata for supported government forms.
+
+\item \textbf{User Interface Module (app/frontend/ui.py):}
+Implements the Streamlit-based web interface providing document upload functionality, extraction progress tracking, data review and editing capabilities, PDF generation controls, user profile management, and administrative user management panel.
+
+\item \textbf{Validation Module (app/utils/validators.py):}
+Enforces data integrity by validating Nepali phone number formats, email address patterns, and required field completeness before allowing form submission and PDF generation.
+
+\end{enumerate}
+
+
+\section{Testing}
+The system underwent comprehensive testing to ensure functionality, accuracy, and reliability across different scenarios. Unit testing verified individual module functionality including data extraction, validation logic, and PDF generation. Integration testing confirmed proper interaction between modules, particularly the fallback mechanism from Gemini AI to OCR extraction. System testing evaluated end-to-end workflows using real citizenship certificates and government forms. Performance testing assessed extraction speed and accuracy with various document qualities. User acceptance testing with sample users validated interface usability and identified areas for improvement in the workflow design.
+
+\begin{table}[H]
+\centering
+\caption{Test Cases for Data Extraction}
+\label{tab:test_extraction}
+\begin{tabular}{|p{1cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{1.3cm}|}
+\hline
+\textbf{Test Case} & \textbf{Description} & \textbf{Steps} & \textbf{Expected} & \textbf{Actual} & \textbf{Remarks} \\
+\hline
+
+TC-EXT-01 Success& 
+Verify successful extraction from clear citizenship image &
+1.Upload high-quality citizenship certificate.
+2.Click Extract with Gemini. 
+3.Wait for processing &
+All fields extracted with \textgreater 80 percent confidence, data displayed in form &
+All fields extracted correctly, average confidence 92 percent &
+Pass \\
+\hline
+
+TC-EXT-02 Failure &
+Test extraction with poor quality image &
+1. Upload blurred or damaged document.  2. Initiate extraction.
+3. Observe results. &
+System falls back to OCR and displays low-confidence warning &
+Gemini failed, OCR activated, confidence less than 50 percent, manual editing required &
+Pass \\
+\hline
+
+\end{tabular}
+\end{table}
+% ================= 1 =================
+
+\begin{table}[H]
+\centering
+\caption{Test Cases for Data Validation}
+\label{tab:test_validation}
+\begin{tabular}{|p{1cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{1.3cm}|}
+\hline
+\textbf{Test Case} & \textbf{Description} & \textbf{Steps} & \textbf{Expected} & \textbf{Actual} & \textbf{Remarks} \\
+\hline
+
+TC-VAL-01 Success& 
+Validate correct Nepali phone format &
+1. Enter phone: 9812345678
+then Submit&
+Validation passes, no error message &
+Phone accepted, validation pass &
+Pass \\
+\hline
+
+TC-VAL-02 Failure &
+Test invalid phone number &
+1.Enter phone: 1234567890
+then Submit form &
+Error:"Phone must start with 9, second digit 7 or 8" &
+ Error displayed correctly, submission blocked &
+Pass \\
+\hline
+
+\end{tabular}
+\end{table}
+% =================  2=================
+\begin{table}[H]
+\centering
+\caption{Test Cases for PDF Generation}
+\label{tab:test_pdf}
+\begin{tabular}{|p{1cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{1.3cm}|}
+\hline
+\textbf{Test Case} & \textbf{Description} & \textbf{Steps} & \textbf{Expected} & \textbf{Actual} & \textbf{Remarks} \\
+\hline
+
+TC-PDF-01 Success &
+Generate filled PDF with valid data &
+1. Complete data extraction. step 2. Review extracted fields. step 3. Click "Generate PDF". &
+PDF created with Nepali text properly rendered, all fields aligned correctly &
+PDF generated successfully, Devanagari text rendered correctly &
+Pass\\
+\hline
+
+TC-PDF-02 Failure &
+Attempt PDF generation with missing required fields &
+step1.Leave mandatory fields empty. step2. Attempt to generate PDF. &
+Error message indicating missing required fields &
+System blocked PDF generation; error message displayed &
+Pass \\
+\hline
+
+\end{tabular}
+\end{table}
+% ================= 3 =================
+\begin{table}[H]
+\centering
+\caption{Test Cases for User Profile Management}
+\label{tab:test_profile}
+\begin{tabular}{|p{1cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{1.3cm}|}
+\hline
+\textbf{Test Case} & \textbf{Description} & \textbf{Steps} & \textbf{Expected} & \textbf{Actual} & \textbf{Remarks} \\
+\hline
+
+TC-PRF-01 Success &
+Create new user profile &
+1.Enter email and password.
+2. Click "Create Account". &
+Profile created, user logged in, data saved to database &
+Profile created successfully, automatic login occurred &
+Pass \\
+\hline
+
+TC-PRF-02 Success &
+Load saved profile data into form &
+1. Login as existing user.
+2. Start new extraction. &
+Previous user data auto-populated in form fields &
+Data loaded correctly from database &
+Pass \\
+\hline
+
+\end{tabular}
+\end{table}
+
+
+% ================= CHAPTER 5 =================
+\chapter{CONCLUSION AND FUTURE RECOMMENDATIONS}
+
+\section{Lessons Learned / Outcome}
+During the development of this project, several valuable lessons emerged regarding real-world software development and working with AI technologies. The most significant challenge was handling the unpredictability of AI extraction—Gemini Vision API occasionally timed out or produced inconsistent results, which emphasized the importance of implementing robust fallback mechanisms and error handling. Managing Devanagari Unicode text throughout the system required careful attention to character encoding and font rendering, particularly when generating PDFs that matched official government templates precisely.
+
+The project successfully demonstrated that automation can significantly reduce manual workload in government offices while maintaining accuracy. Testing with real citizenship certificates and business documents showed average extraction accuracy of 85-90 percent with Gemini AI and 70-75 percent with OCR fallback. The user profile feature proved particularly valuable, reducing repeat data entry time by approximately 80 percent for returning users. This practical experience highlighted the importance of designing systems that balance automation with human oversight, allowing staff to review and correct extracted data before final submission.
+
+
+\section{Conclusion}
+This project successfully developed a functional Auto Form Fill-Up Application that addresses real challenges faced by sub-metropolitan offices in Nepal. The system effectively automates the extraction of information from citizenship certificates and business documents, intelligently maps this data to government form templates, and generates accurate PDF outputs with proper Devanagari rendering. The dual extraction approach using Gemini AI with OCR fallback ensures reliability even under 
+varying network conditions.
+
+The application demonstrates the feasibility of modernizing government form processing through practical technology implementation. While designed as an academic prototype focusing on two specific forms, the template-based architecture provides a foundation for expanding to additional government services. This project validates that even resource-constrained government offices can benefit from automation tools that require minimal infrastructure and technical expertise to operate effectively.
+\section{Future Recommendations}
+The Auto Form Fill-Up Application can be enhanced in several directions to increase its utility and coverage. Based on lessons learned during development and feedback from testing, the following improvements are recommended for future iterations.
+\subsubsection{Immediate Enhancements:}
+\begin{enumerate}[label=\textbullet, topsep=2pt, partopsep=0pt, itemsep=2pt, parsep=0pt]
+\item\textbf{Mobile Application Development: }Create Android/iOS versions allowing citizens to fill forms directly from their smartphones using phone cameras for document capture.
+
+\item\textbf{Expanded Form Support:} Add templates for additional government forms including vehicle registration, marriage certificates, and land ownership transfer documents.
+
+\item\textbf{ Batch Processing Mode:} Implement functionality to process multiple forms simultaneously for offices handling high volumes during peak periods.
+
+\item\textbf{ Offline Mode Optimization:} Enhance OCR accuracy with Nepali-language-specific training  data to improve extraction quality when internet connectivity is unavailable.
+
+\item\textbf{ Digital Signature Integration:} Add support for digital signatures to enable completely paperless form submission and verification.
+
+\subsubsection{Long-term Research Directions:}
+\item\textbf{ Dynamic Form Detection:} Develop computer vision models that can automatically understand new form structures without requiring manual template creation, using deep learning for layout analysis.
+
+\item\textbf{Semantic Field Matching with NLP:} Implement natural language processing to intelligently match source document fields to target forms even when terminology differs, handling synonyms and contextual variations.
+
+\item\textbf{Blockchain-based Verification:} Integrate blockchain technology for tamper-proof record keeping and verification of submitted forms, enhancing security and trust in digital  government services.
+\end{enumerate}
+
+% ================= APPENDICES =================
+\newpage
+
+\chapter*{APENDICES}
+\addcontentsline{toc}{chapter}{APENDICES}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{screenshot1.png}
+\caption{Main Interface}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{screenshot2.png}
+\caption{Extraction in Progress}
+\end{figure}
+
+% ================= REFERENCES =================
+\newpage
+\chapter*{REFERENCES}
+\addcontentsline{toc}{chapter}{REFERENCES}
+\begin{thebibliography}{99}
+
+\bibitem{smith2007}
+R. Smith, ``An overview of the Tesseract OCR engine,'' in \textit{Proc. 9th Int. Conf. Document Analysis and Recognition (ICDAR)}, vol. 2, pp. 629--633, 2007.
+
+\bibitem{antonacopoulos2003}
+A. Antonacopoulos, D. Karatzas, and J. Ortiz, ``ICDAR 2003 page segmentation competition,'' in \textit{Proc. 7th Int. Conf. Document Analysis and Recognition}, pp. 688--692, 2003.
+
+\bibitem{denk2020}
+T. Denk and M. Reisswig, ``BERTgrid: Contextualized embedding for 2D document representation and understanding,'' \textit{arXiv preprint arXiv:2003.00352}, 2020.
+
+\bibitem{dhakal2019}
+S. Dhakal, R. Munikar, and P. Dahal, ``One-shot template matching for automatic document data capture,'' \textit{arXiv preprint arXiv:1910.10037}, 2019.
+
+\bibitem{bhattarai2019}
+S. Bhattarai and P. Adhikari, ``E-Governance in Nepal: Initiatives and challenges,'' \textit{Int. J. Computer Applications}, vol. 182, no. 37, pp. 1--5, 2019.
+
+\end{thebibliography}
+
+\end{document}
